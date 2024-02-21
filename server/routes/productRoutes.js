@@ -1,6 +1,8 @@
 import express from "express";
 import {
   createProuctController,
+  deleteProductController,
+  deleteProductImageController,
   getAllProductsController,
   getSingleProductController,
   updateProductController,
@@ -17,16 +19,23 @@ const router = express.Router();
 //GET ALL PRODUCTs
 router.get("/get-all", getAllProductsController);
 
-//GET SINGLE PRODUCTs
+//GET SINGLE PRODUCT
 router.get("/:id", getSingleProductController);
 
-//CREATE PRODUCTs
+//CREATE PRODUCT
 router.post("/create", isAuth, singleUpload, createProuctController);
 
-//UPDATE PRODUCTs
+//UPDATE PRODUCT
 router.post("/update", isAuth, updateProductController);
 
 // UPDATE PRODUCT IMAGE
 router.put("/image/:id", isAuth, singleUpload, updateProductImageController);
+
+// DELETE PRODUCT
+router.delete("/delete/:id", isAuth, deleteProductController );
+
+// DELETE PRODUCT IMAGE
+router.delete("/delete-image/:id", isAuth, deleteProductImageController);
+
 
 export default router;
