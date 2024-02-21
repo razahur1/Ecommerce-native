@@ -5,10 +5,11 @@ import {
   deleteProductImageController,
   getAllProductsController,
   getSingleProductController,
+  productReviewController,
   updateProductController,
   updateProductImageController,
 } from "../controller/productController.js";
-import { isAuth } from "../middlewares/authMiddleware.js";
+import { isAdmin, isAuth } from "../middlewares/authMiddleware.js";
 import { singleUpload } from "../middlewares/multer.js";
 
 //router obj
@@ -23,19 +24,32 @@ router.get("/get-all", getAllProductsController);
 router.get("/:id", getSingleProductController);
 
 //CREATE PRODUCT
-router.post("/create", isAuth, singleUpload, createProuctController);
+router.post("/create", isAuth, isAdmin, singleUpload, createProuctController);
 
 //UPDATE PRODUCT
-router.post("/update", isAuth, updateProductController);
+router.post("/update", isAuth, isAdmin, updateProductController);
 
 // UPDATE PRODUCT IMAGE
-router.put("/image/:id", isAuth, singleUpload, updateProductImageController);
+router.put(
+  "/image/:id",
+  isAuth,
+  isAdmin,
+  singleUpload,
+  updateProductImageController
+);
 
 // DELETE PRODUCT
-router.delete("/delete/:id", isAuth, deleteProductController );
+router.delete("/delete/:id", isAuth, isAdmin, deleteProductController);
 
 // DELETE PRODUCT IMAGE
-router.delete("/delete-image/:id", isAuth, deleteProductImageController);
+router.delete(
+  "/delete-image/:id",
+  isAuth,
+  isAdmin,
+  deleteProductImageController
+);
 
+// REVIEW PRODUCT
+router.put("/:id/review",isAuth,productReviewController)
 
 export default router;
