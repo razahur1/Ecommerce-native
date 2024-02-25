@@ -5,6 +5,7 @@ import {
   deleteProductImageController,
   getAllProductsController,
   getSingleProductController,
+  getTopProductController,
   productReviewController,
   updateProductController,
   updateProductImageController,
@@ -19,6 +20,9 @@ const router = express.Router();
 
 //GET ALL PRODUCTs
 router.get("/get-all", getAllProductsController);
+
+//GET ALL PRODUCTs
+router.get("/top", getTopProductController);
 
 //GET SINGLE PRODUCT
 router.get("/:id", getSingleProductController);
@@ -50,6 +54,6 @@ router.delete(
 );
 
 // REVIEW PRODUCT
-router.put("/:id/review",isAuth,productReviewController)
+router.put("/:id/review", isAuth, productReviewController);
 
 export default router;

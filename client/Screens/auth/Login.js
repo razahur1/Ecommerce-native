@@ -6,24 +6,45 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import InputBox from "../../Components/Form/InputBox";
+
+//redux hooks
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../redux/features/auth/userAction";
 
 const Login = ({ navigation }) => {
   const loginImage = "https://cdn-icons-png.freepik.com/512/295/295128.png";
   const [email, setEamil] = useState("");
   const [password, setPassword] = useState("");
-
+  //hooks
+  const dispatch = useDispatch();
+  //global state
+  const { loading, error, message } = useSelector((state) => state.user);
   const handleLogin = () => {
     if (!email || !password) {
       return alert("Please add email or password");
     }
     setEamil("");
     setPassword("");
-    alert("Login successfully");
-    navigation.navigate("Home");
+    dispatch(login(email, password));
+    // alert("Login successfully");
+    // navigation.navigate("Home");
   };
+
+  // life cycle
+  useEffect(()=>{
+    if(error){
+      alert(error);
+      dispatch({type:'clearError'})
+    }
+    if(message){
+      alert(message);
+      dispatch({type:'clearError'})
+      navigation.navigate("Home");
+    }
+  },[error,message,dispatch])
   return (
     <View style={styles.container}>
       <Image source={{ uri: loginImage }} style={styles.image} />

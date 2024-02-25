@@ -8,6 +8,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cloudinary from "cloudinary";
 import Stripe from "stripe";
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
 
 import connectDB from "./config/db.js";
 
@@ -31,6 +33,8 @@ cloudinary.v2.config({
 const app = express();
 
 //middleware
+app.use(helmet());
+app.use(mongoSanitize());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
